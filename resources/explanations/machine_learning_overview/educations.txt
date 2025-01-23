@@ -1,0 +1,3 @@
+Den mesta dokumentationen är skriven på engelska.
+
+Det finns en universitetskurs som ges ut av ett Finländskt universitet. Genomför man denna och skriver några tester på Linköpings universitet får man 
