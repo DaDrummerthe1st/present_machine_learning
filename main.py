@@ -6,6 +6,8 @@ import streamlit as st
 
 from libraries.database.test_connection import TestConnection
 
+# The whole app lives inside a sidebar.
+# Relation to the rest of file system from respective page goes out from main-root
 with st.sidebar:
     # TODO: relative path to project root
     # TODO: Cross-platform enabled
