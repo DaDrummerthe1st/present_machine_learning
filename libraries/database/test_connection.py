@@ -12,15 +12,28 @@ class TestConnection:
         cursor = db.cursor()
 
         cursor.execute("""
-                        CREATE TABLE IF NOT EXISTS machines (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        'machinetype');
-                        """)
+                            CREATE TABLE IF NOT EXISTS machines (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            'machinetype');
+                    """)
+
+        # at first this did not need to run, it had update the database and made it possible to SELECT and get the information anyway
+        db.commit()
+
+        # only one row can be written per run in sqlite
+        cursor.execute("""
+                        INSERT INTO machines (machinetype) VALUES (
+                            ('B52'))""")
 
         cursor.execute("""
-                INSERT INTO machines VALUES (
-                1, 'B52')
-                """)
+                        INSERT INTO machines (machinetype) VALUES (
+                            ('Nissan Micra'))""")
+
+        cursor.execute("""
+                        INSERT INTO machines (machinetype) VALUES (
+                            ('Volvo Penta'))""")
+
+        db.commit()
 
         query = """
                 SELECT * FROM machines;
@@ -32,4 +45,10 @@ class TestConnection:
 
         result = cursor.execute(query)
         result = result.fetchall()
+        cursor.execute(query_delete)
+        db.commit()
+
+        cursor.close()
+        db.close()
+
         return result
