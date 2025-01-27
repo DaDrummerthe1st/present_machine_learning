@@ -9,6 +9,11 @@ Att göra den kalkylen och den testmatrisen Linus skrev (100 000 rader med 10 ka
 """
 time_to_process_one_picture_with_yolo_object_detection = 5*60
 
+"""
+att generera 10 000 rader i databasen:
+[2025-01-27 01:01:17] 10,000 rows affected in 179 ms
+"""
+
 performance_chart = {
     'grunddata':['Linus 100 000 rader','klassbilden'],
     'tidsåtgång':[f'{5/60/60} timmar',f'{time_to_process_one_picture_with_yolo_object_detection}']
