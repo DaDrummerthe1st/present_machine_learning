@@ -6,7 +6,7 @@ import streamlit as st
 from libraries.file_handling.list_files import CollectFiles
 from libraries.database.connect import DbConnection
 
-description, app = st.tabs(['Description', 'App'])
+description, app, result = st.tabs(['Description', 'App', 'Result'])
 
 with description:  # tab
     st.header('Bakgrunden till projektet')
@@ -37,17 +37,17 @@ with app:  # tab
 
     picture_info = []
 
-    def status(path, status):
-        db.write('picture_status',
-                 [
-                     # 'timestamp',
-                     'path',   # filename should be replaced by file hash from the categories listed in the
-                                    # file matrix for the model
-                         'status'], data=picture_info)
-
-    for file_name in files_list:
-        st.button('Delete', on_click=(status(file_name, 0) ))
-        st.button('Keep', on_click=(status(file_name, 1) ))
+    # def status(path, status):
+    #     db.write('picture_status',
+    #              [
+    #                  # 'timestamp',
+    #                  'path',   # filename should be replaced by file hash from the categories listed in the
+    #                                 # file matrix for the model
+    #                      'status'], data=picture_info)
+    #
+    # for file_name in files_list:
+    #     st.button('Delete', on_click=(status(file_name, 0) ))
+    #     st.button('Keep', on_click=(status(file_name, 1) ))
 
     db.__cleanup__()
 
@@ -72,3 +72,7 @@ with app:  # tab
     #         image = files_list.make_list_of_files()[picture_order]
     #         st.image(image, use_container_width=True)
     #         picture_order += 1
+
+with result:
+    st.header('Renderad data')
+
