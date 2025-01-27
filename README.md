@@ -22,3 +22,4 @@ I will not manage to finish all goals within the scope of this course. This meth
 6. Exemplify dataframes and data rendered by the different models and correlation to predictive model
 7. Explain CNN, regression, prediction and other methods
 8. Delve deeper into each subject by explaining the math behind it
+
