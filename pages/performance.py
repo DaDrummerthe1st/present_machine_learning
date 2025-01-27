@@ -18,3 +18,5 @@ performance_chart = {
     'grunddata':['Linus 100 000 rader','klassbilden'],
     'tidsåtgång':[f'{5/60/60} timmar',f'{time_to_process_one_picture_with_yolo_object_detection}']
 }
+
+# 100 000 rader, multipliceras med 10 weights tog 43 ms
