@@ -40,7 +40,7 @@ class ModelTraining:
         self.X = pd.DataFrame(np.random.random(size=(n, 10)),
                               columns=self.categories)
 
-        print(self.X.tail)
+        #print(self.X.tail)
         return self.X
 
     # def create_Y(self):
