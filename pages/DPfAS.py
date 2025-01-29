@@ -179,7 +179,7 @@ with mockup:
     #         picture_order += 1
 
 with results:
-    identity, logreg = st.tabs(['Identitet', 'LogReg'])
+    identity, logreg, live = st.tabs(['Identitet', 'LogReg','Live'])
     with identity:
         id_answer = pd.DataFrame(
             ([0, 'ea5286ce55462128d83118f056e493450ac80e36e6ea87294cd97ff93dc6d4c4'],
@@ -187,3 +187,18 @@ with results:
             columns=['keep_or_delete', 'file_id'])
 
         st.dataframe(id_answer, height=100, hide_index=True)
+
+    with logreg:
+        st.header("Logistic Regression")
+        st.markdown(""""
+        Regression = deterministisk metod att beräkna framtida svaret på en nu okänd faktor mha olika givna faktorer.""")
+        st.markdown("""
+        Enkelt kan man beskriva det så här.
+        
+        Flertalet andra delar av en ekvation är kända som en funktion av _X_. Vi kan kalla det efterlängtade svaret för _y_.
+        Vi har tränat modellen på flertalet rader där både **_y_** och **_x_** är kända
+        """)
+
+    with live:
+        model.create_answers()
+        print(model.y)

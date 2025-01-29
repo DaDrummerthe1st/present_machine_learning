@@ -43,50 +43,41 @@ class ModelTraining:
         #print(self.X.tail)
         return self.X
 
-    # def create_Y(self):
-    #     """
-    #     This method creates a Pandas DataFrame X and Y columns
-    #     with categories as headlines
-    #
-    #     y can be created either as the last column and separated with
-    #     """
-    #     print("is this even visible?")
-    #
-    #
-    #
-    #     # Does it work?
-    #     print(type(self.y))
-    #     print(self.y)
-    #     print(self.X)
-    #     yield self.X, self.y
-
     def create_answers(self): # TODO: does not work½½½
         """
         This is a dummy data creator based on the contents of X dataframe
 
         y[0] == file.delete()
         """
+        self.y = np.ndarray((10000,))
 
-        # additional possible categories for y[index] = True
-        # and random_array[index][2] == 1 and random_array[index][3] < 0.3
+        for index, answer in enumerate(self.y):
+            if self.X[index][0] < 0.2:
+                self.y[index] = 1
+            else:
+                self.y[index] = 0
 
-        print('first_print')
-        print(self.y.tail)
-
-        # for index, answer in enumerate(self.y):
-        #     if self.X[index][0] < 0.2:
-        #         self.y[index] = 1
-        #     else:
-        #         self.y[index] = 0
-        print(self.X['is_blurry'])
-        for row in (self.X.loc[self.X['is_blurry'] > 0.7]):
-            self.y[row].append(1)
-        else:
-            self.y[row].append(0)
-
-        #self.y = self.X.loc[self.X['is_blurry'] < 0.2]
-        print('visible?')
-        print(self.y.tail)
+        #
+        # # additional possible categories for y[index] = True
+        # # and random_array[index][2] == 1 and random_array[index][3] < 0.3
+        #
+        # print('first_print')
+        # print(self.y.tail)
+        #
+        # # for index, answer in enumerate(self.y):
+        # #     if self.X[index][0] < 0.2:
+        # #         self.y[index] = 1
+        # #     else:
+        # #         self.y[index] = 0
+        # print(self.X['is_blurry'])
+        # for row in (self.X.loc[self.X['is_blurry'] > 0.7]):
+        #     self.y[row].append(1)
+        # else:
+        #     self.y[row].append(0)
+        #
+        # #self.y = self.X.loc[self.X['is_blurry'] < 0.2]
+        # print('visible?')
+        # print(self.y.tail)
 
     def split_data(self): # TODO: not imlemented
         # split X and y data training and testing sets

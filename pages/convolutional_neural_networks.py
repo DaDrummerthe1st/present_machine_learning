@@ -1,1 +1,0 @@
-# https://www.digitalocean.com/community/tutorials/how-does-cnn-views-the-images
