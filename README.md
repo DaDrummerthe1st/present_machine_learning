@@ -16,7 +16,6 @@ I will not manage to finish all goals within the scope of this course. This meth
 ### Priority
 1. Get a Streamlit up and running locally
 2. Create topics
-3. Create a dictionary of words
 3. Create an overview of potential machine learning methods
 3. Explain Logistic Regression
 4. Create examples of use of Logistic Regression
@@ -24,4 +23,5 @@ I will not manage to finish all goals within the scope of this course. This meth
 6. Exemplify dataframes and data rendered by the different models and correlation to predictive model
 7. Explain CNN, regression, prediction and other methods
 8. Delve deeper into each subject by explaining the math behind it
+9. Create a dictionary of words
 
