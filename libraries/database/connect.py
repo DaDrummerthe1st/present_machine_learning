@@ -12,7 +12,8 @@ class DbConnection:
     def write(self, table, columns, data):
         try:
             self.cursor.execute(f"INSERT INTO {table} ({columns}) VALUES (?, ?)", data)
-        except Exception as e:
+        except Exception as e: # TODO: Find the correct exception
+            print(e)
             prompt = input(f'really create new table {table}? (y/n)')
             if prompt == 'y':
                 self.cursor.execute(f'CREATE TABLE IF NOT EXISTS {table} ({columns})')
@@ -24,7 +25,6 @@ class DbConnection:
     def __cleanup__(self):
         self.cursor.close()
         self.connection.close()
-
 
 
 class TestConnection:
