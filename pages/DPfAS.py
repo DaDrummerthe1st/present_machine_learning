@@ -2,19 +2,21 @@ from hashlib import sha256
 
 import streamlit as st
 import pandas as pd
-from streamlit import columns
-from webcolors import names
+from requests import session
 
 from libraries.model_learning.logistic_regression import ModelTraining
+from libraries.file_handling.list_files import CollectFiles
+from libraries.database.connect import DbConnection
 
 # retrieving example data
 model = ModelTraining()
 X = model.create_X()
 
-description, mockup, results = st.tabs(['Beskrivning','Mockup', 'Resultaten'])
+description, mockup, results = st.tabs(['Beskrivning', 'Mockup', 'Resultaten'])
 
 with description:
-    brief_info, data_handling, information_sources, methods, hashtag = st.tabs(['Introduktion', 'Datahantering', 'Informationskällor', 'Metoderna', 'Hashtag'])
+    brief_info, data_handling, information_sources, methods, hashtag = st.tabs(
+        ['Introduktion', 'Datahantering', 'Informationskällor', 'Metoderna', 'Hashtag'])
     with brief_info:
         st.markdown("""
         DPFAS är ett tankeexperiment, som kanske någon gång ser dagens ljus.
@@ -69,8 +71,10 @@ with description:
         """)
         # TODO: visa på potentiella modeller för resp kategori
         categories = pd.Series(model.categories)
-        technologies_used = pd.Series(['OpenCV', 'YOLO', 'YOLO', 'OpenCV, (OCR)', 'PIL._getexif()', 'Python module os', '','','OpenCV','OpenCV'])
-        headlines = ['Attribute','Technology used']
+        technologies_used = pd.Series(
+            ['OpenCV', 'YOLO', 'YOLO', 'OpenCV, (OCR)', 'PIL._getexif()', 'Python module os', '', '', 'OpenCV',
+             'OpenCV'])
+        headlines = ['Attribute', 'Technology used']
         # categories_techs = pd.concat([pd.DataFrame(model.categories), pd.DataFrame(technologies_used)], axis=1)
         categories_techs = pd.concat([categories.rename(headlines[0]), technologies_used.rename(headlines[1])], axis=1)
         # categories_techs = pd.DataFrame(categories_techs, columns=headlines)
@@ -79,11 +83,23 @@ with description:
         opencv, yolo = st.tabs(['OpenCV', 'YOLO'])
 
         with opencv:
-            st.markdown(
-                "[![qr-code for github repo](app/static/media/qr/differentiate_pictures_for_auto_sync.png)](https://github.com/DaDrummerthe1st/differentiate-pictures-for-auto-sync)")
-
+            st.image('static/media/OpenCV_logo_white_.png', width=100)
+            st.markdown("""
+            OpenCV är världens största computer vision-bibliotek, det är dessutom open source och väldigt väl underhållet.
+            Den innehåller enorma mängder färdigtränade modeller för olika typer av applikationer.OpenCV finns tillgänglig för flertalet programmeringsspråk, däribland Python och C[++].
+            """)
         with yolo:
-            st.markdown('Objektidentifikation ingår i kategorierna "contains_common_identified_objects" och "has_identified_objects".')
+            st.header('YOLO - You Only Look Once')
+            st.markdown("""Lägg namnet Joseph Redmond på minnet!""")
+            st.markdown("""
+            Började som en forskningsartikel, övergick till ett community, där grundaren lämnade eftersom han insåg hur objektidentifikation nu hade effektiviserats så mycket att bl a mycket små drönare skulle kunna skickas ut och ha ihjäl människor med extrem precision.
+            """)
+            st.link_button('Killer Drones', 'https://www.youtube.com/watch?v=TlO2gcs1YvM')
+            st.image(['static/media/qr/article_about_yolo_and_joseph_redmond.png',
+                      'static/media/qr/yolos_first_homepage.png',
+                      'static/media/qr/facial_recognition_drones_military.png'],
+                     caption=['Article about Yolo and Joseph Redmond', 'YOLOs first homepage',
+                              'Facial Recognition Drones Military'])
 
     with hashtag:
         st.header('Hur byggs en hashtag?')
@@ -104,6 +120,64 @@ with description:
         Systemet med hashar (med tillräckligt hög upplsning) medger också att det finns ett mycket stort antal potentiella nycklar. 
         """)
 
+with mockup:
+    st.header('Delete or Keep?')
+
+    st.write('this is where session state begins')
+    st.write(st.session_state)
+
+
+
+    # with st.form('picture_choser'):
+    #     st.radio(
+    #         'Släng eller spara?',
+    #         [':material/delete:',':material/save:'],
+    #         horizontal=True
+    #     )
+    #     st.form_submit_button('Verkställ')
+
+    files_list = CollectFiles('static/media/demopictures/accumulated/')
+    files_list = files_list.make_list_of_files()
+    db = DbConnection()
+
+    picture_info = []
+
+    # def status(path, status):
+    #     db.write('picture_status',
+    #              [
+    #                  # 'timestamp',
+    #                  'path',   # filename should be replaced by file hash from the categories listed in the
+    #                                 # file matrix for the model
+    #                      'status'], data=picture_info)
+    #
+    # for file_name in files_list:
+    #     st.button('Delete', on_click=(status(file_name, 0) ))
+    #     st.button('Keep', on_click=(status(file_name, 1) ))
+
+    db.__cleanup__()
+
+    # TODO: create buttons
+    # for submit-button:
+    # icon="material/delete"
+    # icon="material/save"
+    # icon="material/favorite"
+    # icon="material/bookmark"
+
+    # TODO: is not correctly displayed
+    # number_of_columns = 3
+    # number_of_rows = ceil(len(files_list.make_list_of_files()) / number_of_columns)
+    # st.write(number_of_rows)
+    #
+    # picture_order = 0
+    #
+    # for row in range(number_of_rows):
+    #     row = st.columns(number_of_columns)
+    #     for col in row:
+    #         tile = col.container(height=120)
+    #         image = files_list.make_list_of_files()[picture_order]
+    #         st.image(image, use_container_width=True)
+    #         picture_order += 1
+
 with results:
     identity, logreg = st.tabs(['Identitet', 'LogReg'])
     with identity:
@@ -112,4 +186,4 @@ with results:
              [1, 'ea5286ce55462128d83118f056e493450ac80e36e6ea87294cd97ff93dc6d4c4']),
             columns=['keep_or_delete', 'file_id'])
 
-        st.dataframe(id_answer, height=100)
+        st.dataframe(id_answer, height=100, hide_index=True)
