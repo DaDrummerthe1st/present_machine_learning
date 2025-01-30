@@ -1,6 +1,7 @@
 import hashlib
 import random
 import numpy as np
+import string
 
 
 class HashAndSelection:
@@ -17,6 +18,11 @@ class HashAndSelection:
         print("File 'hashes.txt' with 10,000 rows has been generated.")
 
 
+class RandomString:
+    def id_generator(self, size=6, chars=string.ascii_uppercase + string.digits):
+        return ''.join(random.choice(chars) for _ in range(size))
+
+
 class MatrixFileAnalysis:
     def __init__(self):
         pass
@@ -26,5 +32,5 @@ class MatrixFileAnalysis:
             # generate 10 000 rows
             for _ in range(10000):
                 nparray = np.ndarray((1,10))
-                for val in nparray:
+                # for val in nparray:
 
