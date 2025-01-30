@@ -1,4 +1,5 @@
-#%%
+from hashlib import sha256
+
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -6,6 +7,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn import metrics
 import matplotlib.pyplot as plt
 import seaborn as sns
+
+from libraries.generate_data.dummy import RandomString
+
 
 class ModelTraining:
     def __init__(self):
@@ -20,9 +24,10 @@ class ModelTraining:
                         'is_created_geographically_close_to_neighbor_file',
                         'seems_like_screenshot',
                         'seems_very_dark',
-                        'seems_very_light']
+                        'seems_very_bright']
         # X = media represented by pandas Dataframe
         self.X = []
+        self.file_ids = []
         # y = zero-dimensional binary representation of users way of usage (delete / keep)
         self.y = pd.Series()
 
@@ -36,12 +41,16 @@ class ModelTraining:
         """This method creates a Pandas DataFrame representing n number of pictures
          with categories as headlines"""
 
+        # Create file representing IDs
+        sha = RandomString()
+        self.file_ids = pd.Series([(sha256(str(sha).encode('utf-8')).hexdigest()) for _ in range(n)], name='file_ids')
+
         # Create dummy data representation of image files
         self.X = pd.DataFrame(np.random.random(size=(n, 10)),
                               columns=self.categories)
 
-        #print(self.X.tail)
-        return self.X
+        # concatenate with dummy-data file IDs
+        self.X = pd.concat([self.file_ids, self.X], axis=1)
 
     def create_answers(self): # TODO: does not work½½½
         """
@@ -49,13 +58,18 @@ class ModelTraining:
 
         y[0] == file.delete()
         """
-        self.y = np.ndarray((10000,))
+        # self.y = np.ndarray((10000,))
+        #
+        # for index, answer in enumerate(self.X):
+        #     self.y.append()
+        #     if self.X[index][0] < 0.6:
+        #         self.y[index].append(1)
+        #     else:
+        #         self.y[index].append(0)
 
-        for index, answer in enumerate(self.y):
-            if self.X[index][0] < 0.2:
-                self.y[index] = 1
-            else:
-                self.y[index] = 0
+        # self.y = pd.Series([1 if (self.X.['is_blurry'] < 0.6) else 0 for _ in self.X])
+        # self.y = (self.X.loc['is_blurry'] < 0.6).astype(int)
+        #self.y = pd.Series([0 if (self.X[] < 0.6) else 1 for _ in self.X.iterrows()])
 
         #
         # # additional possible categories for y[index] = True
@@ -111,4 +125,6 @@ class ModelTraining:
 
 # model = ModelTraining()
 # model.create_X()
+# print(model.file_ids.shape)
+
 # model.create_answers()
