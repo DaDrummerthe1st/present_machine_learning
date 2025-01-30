@@ -14,7 +14,6 @@ Projektet, som är initierat av mig, är sprunget ur behovet att minska platsen 
 # När den nyheten kom ut började jag fila på en lösning för att lättare ta bort och behålla RÄTT bilder. Rätt fort gick mina tankar till maskininlärning.
 # Idén är att lära sig hur anvndaren gör med sina bilder för att på så sätt börja kunna föreslå åtgärder i linje med detta.
 # """)
-st.markdown(
-    "[![qr-code for github repo](static/media/qr/differentiate_pictures_for_auto_sync.png)](https://github.com/DaDrummerthe1st/differentiate-pictures-for-auto-sync)")
+st.image('static/media/qr/differentiate_pictures_for_auto_sync.png')
 st.link_button("Länk till repot på Github", "https://github.com/DaDrummerthe1st/differentiate-pictures-for-auto-sync", icon=":material/link:")
 
