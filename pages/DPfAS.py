@@ -106,11 +106,10 @@ with description:
             Började som en forskningsartikel, övergick till ett community, där grundaren lämnade eftersom han insåg hur objektidentifikation nu hade effektiviserats så mycket att bl a mycket små drönare skulle kunna skickas ut och ha ihjäl människor med extrem precision.
             """)
             st.link_button('Killer Drones', 'https://www.youtube.com/watch?v=TlO2gcs1YvM')
-            st.image(['static/media/qr/article_about_yolo_and_joseph_redmond.png',
-                      'static/media/qr/yolos_first_homepage.png',
-                      'static/media/qr/facial_recognition_drones_military.png'],
-                     caption=['Article about Yolo and Joseph Redmond', 'YOLOs first homepage',
-                              'Facial Recognition Drones Military'])
+            col1, col2, col3 = st.columns(3)
+            col1.image('static/media/qr/article_about_yolo_and_joseph_redmond.png', caption='Article about Yolo and Joseph Redmond')
+            col2.image('static/media/qr/yolos_first_homepage.png', caption='YOLOs first homepage')
+            col3.image('static/media/qr/facial_recognition_drones_military.png', caption='Facial recognition drones military')
 
     with hashtag:
         st.header('Hur byggs en hashtag?')
