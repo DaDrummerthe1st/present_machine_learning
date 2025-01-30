@@ -7,9 +7,9 @@ import streamlit as st
 from libraries.file_handling.list_files import CollectFiles
 from libraries.database.connect import DbConnection
 
-description, app, result = st.tabs(['DPFAS', 'App', 'Result'])
+dpfas, app, result = st.tabs(['DPFAS', 'App', 'Result'])
 
-with description:  # tab
+with dpfas:  # tab
     st.subheader('Differentiate Pictures for auto sync')
     st.markdown("""
     Projektet, som är initierat av mig, är sprunget ur behovet att minska platsen mediafiler tar på datorn.
