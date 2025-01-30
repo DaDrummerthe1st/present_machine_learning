@@ -24,6 +24,11 @@ with description:
         ['Introduktion', 'Datahantering', 'Informationskällor', 'Metoderna', 'Hashtag'])
     with brief_info:
         st.header('Differentiate Pictures for Auto Sync')
+        st.image('static/media/qr/differentiate_pictures_for_auto_sync.png')
+        st.link_button("Länk till repot på Github",
+                       "https://github.com/DaDrummerthe1st/differentiate-pictures-for-auto-sync",
+                       icon=":material/link:")
+
         st.markdown("""
         DPFAS är ett tankeexperiment, som kanske någon gång ser dagens ljus.
         
@@ -142,7 +147,7 @@ with mockup:
     this_picture_id = hash_creation.sha256(files.files_list[st.session_state['file_index']])
     result[0] = col1.button('delete', icon=':material/delete:')
     result[1] = col2.button('save', icon=':material/save:')
-    st.write(st.session_state['file_index'])
+    #st.write(st.session_state['file_index'])
     if result[0]:
         # save file_id to database as deleted and move to next
         if st.session_state['file_index'] == len(files.files_list):
@@ -156,9 +161,17 @@ with mockup:
             st.image(files.files_list[st.session_state['file_index']])
 
     if result[1]:
-        pass
+        if st.session_state['file_index'] == len(files.files_list):
+            st.image(files.files_list[st.session_state['file_index']])
+            st.session_state.file_index += 1
+        elif st.session_state['file_index'] < len(files.files_list):
+            st.image(files.files_list[st.session_state['file_index']])
+            st.session_state.file_index += 1
+        elif st.session_state['file_index'] > len(files.files_list):
+            st.session_state.file_index = 0
+            st.image(files.files_list[st.session_state['file_index']])
         # save file_id to database and move to next
-    st.image(files.files_list[st.session_state['file_index']])
+    #st.image(files.files_list[st.session_state['file_index']])
     st.write(this_picture_id)
 
 
