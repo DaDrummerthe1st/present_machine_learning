@@ -8,10 +8,11 @@ from hashlib import sha256
 from libraries.database.connect import TestConnection
 
 
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns(3)
 col1.link_button("Länk till repot på Github", "https://github.com/DaDrummerthe1st/present_machine_learning", icon=":material/link:")
 col2.markdown(
-    "[![qr-code for github repo](app/static/media/qr/present_machine_learning.png)](https://github.com/DaDrummerthe1st/present_machine_learning)")
+    "[![qr-code for github repo](static/media/qr/present_machine_learning.png)](https://github.com/DaDrummerthe1st/present_machine_learning)")
+col3.image('static/media/qr/present_machine_learning.png')
 st.markdown("""
 Det här projektet är till för att jag själv ska få en övergripande bild av ML (Machine Learning) och även för stt testa lite hur det kan fungera.
 
