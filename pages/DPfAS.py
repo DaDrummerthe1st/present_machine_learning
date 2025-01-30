@@ -200,5 +200,7 @@ with results:
         """)
 
     with live:
+        st.dataframe(model.X, hide_index=True, height=100)
+        print("här vill vi se datatypen" + str(type(model.X)))
         model.create_answers()
-        print(model.y)
+        #st.dataframe(model.y, hide_index=True, height=100)
