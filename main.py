@@ -34,7 +34,10 @@ from libraries.model_learning.logistic_regression import ModelTraining
 
 
 # st.sidebar.title('Agenda') " also not on top
-
+col1, col2 = st.columns(2)
+col1.link_button("Länk till repot på Github", "https://github.com/DaDrummerthe1st/present_machine_learning", icon=":material/link:")
+col2.markdown(
+    "[![qr-code for github repo](app/static/media/qr/present_machine_learning.png)](https://github.com/DaDrummerthe1st/present_machine_learning)")
 st.markdown("""
 Det här projektet är till för att jag själv ska få en övergripande bild av ML (Machine Learning) och även för stt testa lite hur det kan fungera.
 
@@ -44,9 +47,6 @@ Fel kan förekomma och jag tar mer än gärna emot feedback.
 
 Jag har begränsat detta förberedande projekt till att bara handla om bilder, mest för att det är avsevärt mycket mindre datahantering än t ex filmkläpp.
 """)
-st.link_button("Länk till repot på Github", "https://github.com/DaDrummerthe1st/present_machine_learning", icon=":material/link:")
-st.markdown(
-    "[![qr-code for github repo](app/static/media/qr/present_machine_learning.png)](https://github.com/DaDrummerthe1st/present_machine_learning)")
 
 
 class TestRun:
