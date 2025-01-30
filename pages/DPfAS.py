@@ -7,10 +7,15 @@ from requests import session
 from libraries.model_learning.logistic_regression import ModelTraining
 from libraries.file_handling.list_files import CollectFiles
 from libraries.database.connect import DbConnection
+from libraries.file_handling.list_files import CollectFiles
+from libraries.generate_data.hash import Hash
 
 # retrieving example data
 model = ModelTraining()
 X = model.create_X()
+
+# initialising Hash
+hash_creation = Hash()
 
 description, mockup, results = st.tabs(['Beskrivning', 'Mockup', 'Resultaten'])
 
@@ -123,8 +128,37 @@ with description:
 with mockup:
     st.header('Delete or Keep?')
 
-    st.write('this is where session state begins')
-    st.write(st.session_state)
+    path = 'static/media/demopictures/accumulated'
+    files = CollectFiles(path=path)
+    files.make_list_of_files()
+
+    col1, col2 = st.columns(2)
+
+    result = [None, None]
+    if 'file_index' not in st.session_state:
+        st.session_state['file_index'] = 0
+
+    this_picture_id = hash_creation.sha256(files.files_list[st.session_state['file_index']])
+    result[0] = col1.button('delete', icon=':material/delete:')
+    result[1] = col2.button('save', icon=':material/save:')
+    st.write(st.session_state['file_index'])
+    if result[0]:
+        # save file_id to database as deleted and move to next
+        if st.session_state['file_index'] == len(files.files_list):
+            st.image(files.files_list[st.session_state['file_index']])
+            st.session_state.file_index += 1
+        elif st.session_state['file_index'] < len(files.files_list):
+            st.image(files.files_list[st.session_state['file_index']])
+            st.session_state.file_index += 1
+        elif st.session_state['file_index'] > len(files.files_list):
+            st.session_state.file_index = 0
+            st.image(files.files_list[st.session_state['file_index']])
+
+    if result[1]:
+        pass
+        # save file_id to database and move to next
+    st.image(files.files_list[st.session_state['file_index']])
+    st.write(this_picture_id)
 
 
 
@@ -136,11 +170,11 @@ with mockup:
     #     )
     #     st.form_submit_button('Verkställ')
 
-    files_list = CollectFiles('static/media/demopictures/accumulated/')
-    files_list = files_list.make_list_of_files()
-    db = DbConnection()
-
-    picture_info = []
+    # files_list = CollectFiles('static/media/demopictures/accumulated/')
+    # files_list = files_list.make_list_of_files()
+    # db = DbConnection()
+    #
+    # picture_info = []
 
     # def status(path, status):
     #     db.write('picture_status',
@@ -154,7 +188,7 @@ with mockup:
     #     st.button('Delete', on_click=(status(file_name, 0) ))
     #     st.button('Keep', on_click=(status(file_name, 1) ))
 
-    db.__cleanup__()
+    # db.__cleanup__()
 
     # TODO: create buttons
     # for submit-button:
@@ -179,8 +213,8 @@ with mockup:
     #         picture_order += 1
 
 with results:
-    identity, logreg, live = st.tabs(['Identitet', 'LogReg','Live'])
-    with identity:
+    answers, logreg, live = st.tabs(['Svar', 'LogReg','Live'])
+    with answers:
         id_answer = pd.DataFrame(
             ([0, 'ea5286ce55462128d83118f056e493450ac80e36e6ea87294cd97ff93dc6d4c4'],
              [1, 'ea5286ce55462128d83118f056e493450ac80e36e6ea87294cd97ff93dc6d4c4']),
@@ -201,6 +235,5 @@ with results:
 
     with live:
         st.dataframe(model.X, hide_index=True, height=100)
-        print("här vill vi se datatypen" + str(type(model.X)))
         model.create_answers()
         #st.dataframe(model.y, hide_index=True, height=100)
