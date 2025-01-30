@@ -23,6 +23,7 @@ with description:
     brief_info, data_handling, information_sources, methods, hashtag = st.tabs(
         ['Introduktion', 'Datahantering', 'Informationskällor', 'Metoderna', 'Hashtag'])
     with brief_info:
+        st.header('Differentiate Pictures for Auto Sync')
         st.markdown("""
         DPFAS är ett tankeexperiment, som kanske någon gång ser dagens ljus.
         
